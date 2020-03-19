@@ -43,7 +43,6 @@ app.layout = html.Div([
         # Allow multiple files to be uploaded
         multiple=True
     ),
-# dcc.Graph(id='Mygraph'),
     html.Div(id='output-data-upload')
 ])
 
@@ -71,28 +70,6 @@ def parse_data(contents, filename):
 
     return df
 
-
-#@app.callback(Output('Mygraph', 'figure'),
-#            [
-#                Input('upload-data', 'contents'),
-#                Input('upload-data', 'filename')
-#            ])
-
-#def update_graph(contents, filename):
-#   fig = {
-#      'layout': go.Layout(
-#         plot_bgcolor=colors["graphBackground"],
-#        paper_bgcolor=colors["graphBackground"])
-#    }
-
-#   if contents:
-#      contents = contents[0]
-#     filename = filename[0]
-#    df = parse_data(contents, filename)
-
-
-
-#    return fig 
 
 @app.callback(Output('output-data-upload', 'children'),
             [
@@ -122,8 +99,6 @@ def update_table(contents, filename):
         ])
 
     return table
-
-
 
 
 if __name__ == '__main__':
