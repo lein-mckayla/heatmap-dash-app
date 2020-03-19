@@ -43,7 +43,7 @@ app.layout = html.Div([
         # Allow multiple files to be uploaded
         multiple=True
     ),
-# dcc.Graph(id='Mygraph'),
+    dcc.Graph(id='Mygraph'),
     html.Div(id='output-data-upload')
 ])
 
@@ -72,23 +72,32 @@ def parse_data(contents, filename):
     return df
 
 
-#@app.callback(Output('Mygraph', 'figure'),
-#            [
-#                Input('upload-data', 'contents'),
-#                Input('upload-data', 'filename')
-#            ])
+@app.callback(Output('Mygraph', 'figure'),
+            [
+                Input('upload-data', 'contents'),
+                Input('upload-data', 'filename')
+            ])
 
-#def update_graph(contents, filename):
-#   fig = {
-#      'layout': go.Layout(
-#         plot_bgcolor=colors["graphBackground"],
-#        paper_bgcolor=colors["graphBackground"])
-#    }
+def update_graph(contents, filename):
+    fig = {
+        'layout': go.Layout(
+            plot_bgcolor=colors["graphBackground"],
+            paper_bgcolor=colors["graphBackground"])}
 
-#   if contents:
-#      contents = contents[0]
-#     filename = filename[0]
-#    df = parse_data(contents, filename)
+    if contents:
+        contents = contents[0]
+        filename = filename[0]
+        df = parse_data(contents, filename)
+        trace1 = go.Heatmap(
+                    x=df['STUDY_TYPE'],
+                    y=df['ENDPOINT_CATEGORY'],
+                    z=df['Increasing (Red) Decreasing (Blue)'])
+
+        layout = go.Layout(
+            title = 'graph1'
+        )
+        fig = go.Figure(data=[trace1], layout=layout)
+    return fig
 
 
 
